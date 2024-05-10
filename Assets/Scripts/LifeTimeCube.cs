@@ -1,22 +1,29 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshRenderer), typeof(Collider))]
-public class DisappearingCube : MonoBehaviour
+public class LifeTimeCube : MonoBehaviour
 {
+    private Color _startColor;
     private WaitForSeconds _delay;
     private MeshRenderer _meshRenderer;
     private bool _isCanChangeColor = true;
+
+    public UnityEvent<LifeTimeCube> IsLifeTimeEnd;
 
     private void Awake()
     {
         _delay = new WaitForSeconds(SetDelay());
         _meshRenderer = GetComponent<MeshRenderer>();
+        _startColor = _meshRenderer.material.color;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        StartCoroutine(WaitingForDestroy());
+        StartCoroutine(Disappearing());
+        _isCanChangeColor = true;
+        _meshRenderer.material.color = _startColor;
     }
 
     public void ChangeColor()
@@ -31,10 +38,10 @@ public class DisappearingCube : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitingForDestroy()
+    private IEnumerator Disappearing()
     {
         yield return _delay;
-        Destroy(gameObject);
+        IsLifeTimeEnd?.Invoke(this);
     }
 
     private float SetDelay()
