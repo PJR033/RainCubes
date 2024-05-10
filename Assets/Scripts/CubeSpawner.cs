@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] LifeTimeCube _prefab;
-    [SerializeField] float _spawnDelay;
-    [SerializeField] Transform _container;
-    [SerializeField] int _maxCubesCount;
-    [SerializeField] bool _autoExpand = true;
+    [SerializeField] private LifetimeCube _prefab;
+    [SerializeField] private float _spawnDelay;
+    [SerializeField] private Transform _container;
+    [SerializeField] private int _maxCubesCount;
+    [SerializeField] private bool _autoExpand = true;
 
-    private MonoPool<LifeTimeCube> _pool;
+    private MonoPool<LifetimeCube> _pool;
     private Transform[] _spawnPoints;
     private WaitForSeconds _delay;
 
     private void Awake()
     {
-        _pool = new MonoPool<LifeTimeCube>(_prefab, _maxCubesCount, _container, _autoExpand);
+        _pool = new MonoPool<LifetimeCube>(_prefab, _maxCubesCount, _container, _autoExpand);
         _delay = new WaitForSeconds(_spawnDelay);
         _spawnPoints = new Transform[transform.childCount];
 
@@ -39,10 +39,16 @@ public class CubeSpawner : MonoBehaviour
             float maxRotation = 360;
             Vector3 cubeRotation = new Vector3(Random.Range(0, maxRotation), Random.Range(0, maxRotation), Random.Range(0, maxRotation));
 
-            LifeTimeCube cube = _pool.GetFreeElement();
-            cube.IsLifeTimeEnd.AddListener(_pool.PutElement);
+            LifetimeCube cube = _pool.GetFreeElement();
+            cube.LifetimeEnd += DeactivateCube;
             cube.transform.position = _spawnPoints[pointIndex].position;
             cube.transform.rotation = Quaternion.Euler(cubeRotation);
         }
+    }
+
+    private void DeactivateCube(LifetimeCube cube)
+    {
+        _pool.PutElement(cube);
+        cube.LifetimeEnd -= DeactivateCube;
     }
 }

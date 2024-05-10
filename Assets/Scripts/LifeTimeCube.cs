@@ -1,26 +1,26 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshRenderer), typeof(Collider))]
-public class LifeTimeCube : MonoBehaviour
+public class LifetimeCube : MonoBehaviour
 {
     private Color _startColor;
     private WaitForSeconds _delay;
     private MeshRenderer _meshRenderer;
     private bool _isCanChangeColor = true;
 
-    public UnityEvent<LifeTimeCube> IsLifeTimeEnd;
+    public event Action<LifetimeCube> LifetimeEnd;
 
     private void Awake()
     {
-        _delay = new WaitForSeconds(SetDelay());
         _meshRenderer = GetComponent<MeshRenderer>();
         _startColor = _meshRenderer.material.color;
     }
 
     private void OnEnable()
     {
+        _delay = new WaitForSeconds(SetDelay());
         StartCoroutine(Disappearing());
         _isCanChangeColor = true;
         _meshRenderer.material.color = _startColor;
@@ -32,7 +32,7 @@ public class LifeTimeCube : MonoBehaviour
         {
             string colorName = "_Color";
             float colorMaxValue = 1f;
-            Color newColor = new Color(Random.Range(0f, colorMaxValue), Random.Range(0f, colorMaxValue), Random.Range(0f, colorMaxValue));
+            Color newColor = new Color(UnityEngine.Random.Range(0f, colorMaxValue), UnityEngine.Random.Range(0f, colorMaxValue), UnityEngine.Random.Range(0f, colorMaxValue));
             _meshRenderer.material.SetColor(colorName, newColor);
             _isCanChangeColor = false;
         }
@@ -41,7 +41,7 @@ public class LifeTimeCube : MonoBehaviour
     private IEnumerator Disappearing()
     {
         yield return _delay;
-        IsLifeTimeEnd?.Invoke(this);
+        LifetimeEnd?.Invoke(this);
     }
 
     private float SetDelay()
@@ -49,6 +49,6 @@ public class LifeTimeCube : MonoBehaviour
         float minDelay = 2f;
         float maxDelay = 5f;
 
-        return Random.Range(minDelay, maxDelay);
+        return UnityEngine.Random.Range(minDelay, maxDelay);
     }
 }
