@@ -6,9 +6,11 @@ using UnityEngine;
 public class LifetimeCube : MonoBehaviour
 {
     private Color _startColor;
-    private WaitForSeconds _delay;
+    private WaitForSeconds _disappearDelay;
     private MeshRenderer _meshRenderer;
     private bool _isCanChangeColor = true;
+
+    public float Delay { private set; get; }
 
     public event Action<LifetimeCube> LifetimeEnd;
 
@@ -20,7 +22,8 @@ public class LifetimeCube : MonoBehaviour
 
     private void OnEnable()
     {
-        _delay = new WaitForSeconds(SetDelay());
+        Delay = SetDelay();
+        _disappearDelay = new WaitForSeconds(Delay);
         StartCoroutine(Disappearing());
         _isCanChangeColor = true;
         _meshRenderer.material.color = _startColor;
@@ -30,17 +33,16 @@ public class LifetimeCube : MonoBehaviour
     {
         if (_isCanChangeColor)
         {
-            string colorName = "_Color";
             float colorMaxValue = 1f;
             Color newColor = new Color(UnityEngine.Random.Range(0f, colorMaxValue), UnityEngine.Random.Range(0f, colorMaxValue), UnityEngine.Random.Range(0f, colorMaxValue));
-            _meshRenderer.material.SetColor(colorName, newColor);
+            _meshRenderer.material.color = newColor;
             _isCanChangeColor = false;
         }
     }
 
     private IEnumerator Disappearing()
     {
-        yield return _delay;
+        yield return _disappearDelay;
         LifetimeEnd?.Invoke(this);
     }
 
