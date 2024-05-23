@@ -12,11 +12,10 @@ public class CubeSpawner : Spawner
     private WaitForSeconds _delay;
 
     public event Action<LifetimeCube> CubeSpawned;
-    public event Action CubeDeactivated;
 
     private void Awake()
     {
-        _pool = new MonoPool<LifetimeCube>(_prefab, _maxObjectsCount, _container, _autoExpand);
+        _pool = new MonoPool<LifetimeCube>(_prefab, MaxObjectsCount, Container, AutoExpand);
         _delay = new WaitForSeconds(_spawnDelay);
         _spawnPoints = new Transform[transform.childCount];
 
@@ -45,6 +44,7 @@ public class CubeSpawner : Spawner
             cube.transform.position = _spawnPoints[pointIndex].position;
             cube.transform.rotation = Quaternion.Euler(cubeRotation);
             CubeSpawned?.Invoke(cube);
+            SpawnEventInvoke();
         }
     }
 
@@ -52,6 +52,6 @@ public class CubeSpawner : Spawner
     {
         _pool.PutElement(cube);
         cube.LifetimeEnd -= DeactivateCube;
-        CubeDeactivated?.Invoke();
+        DeactivateEventInvoke();
     }
 }

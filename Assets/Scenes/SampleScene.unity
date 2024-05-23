@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 205406728}
   - component: {fileID: 205406731}
   - component: {fileID: 205406730}
-  - component: {fileID: 205406729}
+  - component: {fileID: 205406732}
   m_Layer: 5
   m_Name: ActiveCubesCountView
   m_TagString: Untagged
@@ -405,19 +405,6 @@ RectTransform:
   m_AnchoredPosition: {x: -57, y: -19}
   m_SizeDelta: {x: 106, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &205406729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205406727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c228ff08914a934eae780947df5be7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CubesSpawner: {fileID: 1235645898}
 --- !u!114 &205406730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +502,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205406727}
   m_CullTransparentMesh: 1
+--- !u!114 &205406732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205406727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cb519ddf76bd043a073371eb3e5c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spawner: {fileID: 1235645898}
 --- !u!1 &243109539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,9 +1239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eab51db49323ad41a6ad77e1b7e14c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 2022570568}
-  _maxObjectsCount: 10
-  _autoExpand: 1
+  Container: {fileID: 0}
+  MaxObjectsCount: 0
+  AutoExpand: 1
   _prefab: {fileID: 7829037121358220830, guid: b317002a5ac54a043aa31736f6a888b6, type: 3}
   _cubeSpawner: {fileID: 1235645898}
 --- !u!4 &745292047
@@ -1385,7 +1385,7 @@ GameObject:
   - component: {fileID: 1067010519}
   - component: {fileID: 1067010522}
   - component: {fileID: 1067010521}
-  - component: {fileID: 1067010520}
+  - component: {fileID: 1067010523}
   m_Layer: 5
   m_Name: TotalCreatedCubesCountView
   m_TagString: Untagged
@@ -1413,19 +1413,6 @@ RectTransform:
   m_AnchoredPosition: {x: -82.00006, y: -20}
   m_SizeDelta: {x: 78, y: -22}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1067010520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067010518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26ae29c573476e247b839a475fcdbc65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CubesSpawner: {fileID: 1235645898}
 --- !u!114 &1067010521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1523,6 +1510,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067010518}
   m_CullTransparentMesh: 1
+--- !u!114 &1067010523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067010518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb857953a1f66a4b8200c5ee7263288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Spawner: {fileID: 1235645898}
 --- !u!1 &1185658254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cb519ddf76bd043a073371eb3e5c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BombsSpawner: {fileID: 745292046}
+  Spawner: {fileID: 745292046}
 --- !u!114 &1185658257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,9 +1800,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01dedf37c05a25a4aa7014566ef75221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 1594933595}
-  _maxObjectsCount: 10
-  _autoExpand: 1
+  Container: {fileID: 0}
+  MaxObjectsCount: 0
+  AutoExpand: 1
   _prefab: {fileID: 9213132925757542189, guid: 76e3a8e6153469b4fa721931e7fc0e96, type: 3}
   _spawnDelay: 0.5
 --- !u!4 &1235645899
@@ -2014,7 +2014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb857953a1f66a4b8200c5ee7263288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BombsSpawner: {fileID: 745292046}
+  Spawner: {fileID: 745292046}
 --- !u!114 &1679345711
 MonoBehaviour:
   m_ObjectHideFlags: 0

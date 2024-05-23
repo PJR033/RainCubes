@@ -8,12 +8,9 @@ public class BombSpawner : Spawner
 
     private MonoPool<Bomb> _pool;
 
-    public event Action BombSpawned;
-    public event Action BombDeactivated;
-
     private void Awake()
     {
-        _pool = new MonoPool<Bomb>(_prefab, _maxObjectsCount, _container, _autoExpand);
+        _pool = new MonoPool<Bomb>(_prefab, MaxObjectsCount, Container, AutoExpand);
     }
 
     private void OnEnable()
@@ -34,17 +31,17 @@ public class BombSpawner : Spawner
     private void SpawnBomb(LifetimeCube cube)
     {
         Bomb bomb = _pool.GetFreeElement();
-        bomb.ExplosionDelay = cube.Delay;
+        bomb.SetDelay(cube.Delay);
         bomb.transform.position = cube.transform.position;
         bomb.IsExplosed += DeactivateBomb;
         cube.LifetimeEnd -= SpawnBomb;
-        BombSpawned?.Invoke();
+        SpawnEventInvoke();
     }
 
     private void DeactivateBomb(Bomb bomb)
     {
         _pool.PutElement(bomb);
         bomb.IsExplosed -= DeactivateBomb;
-        BombDeactivated?.Invoke();
+        DeactivateEventInvoke();
     }
 }

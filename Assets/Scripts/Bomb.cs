@@ -8,8 +8,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] float _explosionForce;
     [SerializeField] float _eplosionRadius;
 
-    public float ExplosionDelay;
-
+    private float _explosionDelay = 1f;
     private MeshRenderer _renderer;
 
     public event Action<Bomb> IsExplosed;
@@ -21,15 +20,23 @@ public class Bomb : MonoBehaviour
 
     private void OnEnable()
     {
+        Color startColor = _renderer.material.color;
+        startColor.a = 1f;
+        _renderer.material.color = startColor;
         StartCoroutine(ChangingTransparency());
+    }
+
+    public void SetDelay(float delay)
+    {
+        _explosionDelay = delay;
     }
 
     private IEnumerator ChangingTransparency()
     {
-        float transparencyChangeDelta = _renderer.material.color.a / ExplosionDelay;
+        float transparencyChangeDelta = _renderer.material.color.a / _explosionDelay;
         float totalTIme = 0f;
 
-        while (totalTIme < ExplosionDelay)
+        while (totalTIme < _explosionDelay)
         {
             Color tempColor = _renderer.material.color;
             tempColor.a = Mathf.MoveTowards(tempColor.a, 0, transparencyChangeDelta * Time.deltaTime);
@@ -38,6 +45,7 @@ public class Bomb : MonoBehaviour
             yield return null;
         }
 
+        Debug.Log(totalTIme);
         Explose();
     }
 

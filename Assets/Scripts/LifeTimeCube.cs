@@ -10,9 +10,9 @@ public class LifetimeCube : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private bool _isCanChangeColor = true;
 
-    public float Delay { private set; get; }
-
     public event Action<LifetimeCube> LifetimeEnd;
+
+    public float Delay { private set; get; }
 
     private void Awake()
     {
